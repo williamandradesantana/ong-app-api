@@ -5,15 +5,25 @@ import org.springframework.hateoas.RepresentationModel;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.UUID;
 
-public class UserRequestDTO extends RepresentationModel<UserRequestDTO> implements Serializable {
+public class UserResponseDTO extends RepresentationModel<UserResponseDTO> implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
+    private UUID id;
     private String username;
     private String email;
     private String password;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
@@ -44,13 +54,14 @@ public class UserRequestDTO extends RepresentationModel<UserRequestDTO> implemen
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
-        UserRequestDTO that = (UserRequestDTO) o;
-        return Objects.equals(username, that.username) && Objects.equals(email, that.email) && Objects.equals(password, that.password);
+        UserResponseDTO that = (UserResponseDTO) o;
+        return Objects.equals(id, that.id) && Objects.equals(username, that.username) && Objects.equals(email, that.email) && Objects.equals(password, that.password);
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
+        result = 31 * result + Objects.hashCode(id);
         result = 31 * result + Objects.hashCode(username);
         result = 31 * result + Objects.hashCode(email);
         result = 31 * result + Objects.hashCode(password);
