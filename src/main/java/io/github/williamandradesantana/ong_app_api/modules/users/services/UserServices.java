@@ -42,7 +42,7 @@ public class UserServices {
     }
 
     public UserResponseDTO findById(UUID id) {
-        var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        var entity = findEnabledUserOrThrow(id);
         return toResponseDTOWithLinks(entity);
     }
 
