@@ -1,11 +1,9 @@
 package io.github.williamandradesantana.ong_app_api.modules.roles.data.dto;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 
 public class RoleRequestDTO extends RepresentationModel<RoleRequestDTO> implements Serializable {
