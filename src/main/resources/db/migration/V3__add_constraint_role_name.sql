@@ -1,0 +1,1 @@
+alter table tb_roles add constraint chk_role_name check (name in ('ADMIN', 'VOLUNTEER', 'DONOR'));
