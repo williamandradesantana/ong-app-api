@@ -1,12 +1,16 @@
 package io.github.williamandradesantana.ong_app_api.modules.users.data.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
+@JsonPropertyOrder({"id", "username", "email", "createdAt", "updatedAt", "_links"})
 public class UserResponseDTO extends RepresentationModel<UserResponseDTO> implements Serializable {
 
     @Serial
@@ -15,7 +19,8 @@ public class UserResponseDTO extends RepresentationModel<UserResponseDTO> implem
     private UUID id;
     private String username;
     private String email;
-    private String password;
+    private Instant createdAt;
+    private Instant updatedAt;
 
     public UUID getId() {
         return id;
@@ -41,12 +46,20 @@ public class UserResponseDTO extends RepresentationModel<UserResponseDTO> implem
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
@@ -55,16 +68,13 @@ public class UserResponseDTO extends RepresentationModel<UserResponseDTO> implem
         if (!super.equals(o)) return false;
 
         UserResponseDTO that = (UserResponseDTO) o;
-        return Objects.equals(id, that.id) && Objects.equals(username, that.username) && Objects.equals(email, that.email) && Objects.equals(password, that.password);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + Objects.hashCode(id);
-        result = 31 * result + Objects.hashCode(username);
-        result = 31 * result + Objects.hashCode(email);
-        result = 31 * result + Objects.hashCode(password);
         return result;
     }
 }
