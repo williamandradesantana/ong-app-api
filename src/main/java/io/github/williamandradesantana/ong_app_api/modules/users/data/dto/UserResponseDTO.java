@@ -1,6 +1,5 @@
 package io.github.williamandradesantana.ong_app_api.modules.users.data.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.springframework.hateoas.RepresentationModel;
 
