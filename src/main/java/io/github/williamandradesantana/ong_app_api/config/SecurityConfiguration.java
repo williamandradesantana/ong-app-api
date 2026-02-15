@@ -2,6 +2,7 @@ package io.github.williamandradesantana.ong_app_api.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,6 +27,7 @@ public class SecurityConfiguration {
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests((authorize) -> {
                     authorize.requestMatchers("/api/users/**").permitAll();
+                    authorize.requestMatchers(HttpMethod.POST,"/api/roles/**").permitAll();
                     authorize.anyRequest().authenticated();
                 });
 
