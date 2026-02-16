@@ -1,5 +1,6 @@
 package io.github.williamandradesantana.ong_app_api.exceptions.handler;
 
+import io.github.williamandradesantana.ong_app_api.exceptions.BusinessException;
 import io.github.williamandradesantana.ong_app_api.exceptions.ExceptionResponse;
 import io.github.williamandradesantana.ong_app_api.exceptions.RequiredObjectIsNullException;
 import io.github.williamandradesantana.ong_app_api.exceptions.ResourceNotFoundException;
@@ -32,6 +33,16 @@ public class CustomEntityResponseHandler {
                 request.getDescription(false)
         );
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ExceptionResponse> handleConflictExceptions(BusinessException ex, WebRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(Exception.class)
