@@ -12,6 +12,9 @@ import io.github.williamandradesantana.ong_app_api.modules.users.repository.User
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.UUID;
+
 @Service
 public class UserRolesServices {
     @Autowired
@@ -39,5 +42,9 @@ public class UserRolesServices {
         UserRolesEntity savedUserRole = userRolesRepository.save(entity);
 
         return userRolesMapper.toResponseDTO(savedUserRole);
+    }
+
+    public List<UserRolesEntity> findEnabledRolesByUserId(UUID userId) {
+        return userRolesRepository.findAllByUserIdAndRoleEnabledTrue(userId);
     }
 }

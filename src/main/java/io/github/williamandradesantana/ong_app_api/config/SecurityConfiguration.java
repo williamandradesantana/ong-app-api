@@ -1,5 +1,6 @@
 package io.github.williamandradesantana.ong_app_api.config;
 
+import io.github.williamandradesantana.ong_app_api.security.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,12 +24,11 @@ public class SecurityConfiguration {
 
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-                .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests((authorize) -> {
-                    authorize.requestMatchers("/api/users/**").permitAll();
-                    authorize.requestMatchers("/api/roles/**").permitAll();
-                    authorize.requestMatchers("/api/user-roles/**").permitAll();
+                    authorize.requestMatchers("/api/users/**").hasAnyAuthority("DONOR", "ADMIN");
+                    authorize.requestMatchers("/api/roles/**").hasAnyAuthority("ADMIN", "VOLUNTEER");
+                    authorize.requestMatchers("/api/user-roles/**");
                     authorize.anyRequest().authenticated();
                 });
 

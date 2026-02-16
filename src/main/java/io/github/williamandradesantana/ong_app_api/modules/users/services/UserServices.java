@@ -80,6 +80,11 @@ public class UserServices {
         repository.save(entity);
     }
 
+    public UserEntity findByUsername(String username) {
+        return repository.findByUsernameAndEnabledTrue(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    }
+
     private UserEntity findEnabledUserOrThrow(UUID id) {
         var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         if (!entity.getEnabled()) throw new ResourceNotFoundException("User not found");
