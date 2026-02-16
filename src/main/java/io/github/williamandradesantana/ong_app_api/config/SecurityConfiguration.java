@@ -27,7 +27,8 @@ public class SecurityConfiguration {
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests((authorize) -> {
                     authorize.requestMatchers("/api/users/**").permitAll();
-                    authorize.requestMatchers(HttpMethod.POST,"/api/roles/**").permitAll();
+                    authorize.requestMatchers("/api/roles/**").permitAll();
+                    authorize.requestMatchers("/api/user-roles/**").permitAll();
                     authorize.anyRequest().authenticated();
                 });
 
