@@ -7,15 +7,25 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
+import java.util.UUID;
 
-@JsonPropertyOrder({"name", "createdAt", "updatedAt", "_links"})
+@JsonPropertyOrder({"id", "name", "createdAt", "updatedAt", "_links"})
 public class RoleResponseDTO extends RepresentationModel<RoleResponseDTO> implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    private UUID id;
     private String name;
     private Instant createdAt;
     private Instant updatedAt;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
