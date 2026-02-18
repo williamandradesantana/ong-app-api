@@ -8,6 +8,11 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "enabled", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     UserEntity toEntity(UserRequestDTO requestDTO);
     UserRequestDTO toRequestDTO(UserEntity entity);
 

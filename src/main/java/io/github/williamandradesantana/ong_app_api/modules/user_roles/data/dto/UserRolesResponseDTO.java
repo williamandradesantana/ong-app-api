@@ -1,5 +1,6 @@
 package io.github.williamandradesantana.ong_app_api.modules.user_roles.data.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.github.williamandradesantana.ong_app_api.modules.users.data.dto.UserResponseDTO;
 import org.springframework.hateoas.RepresentationModel;
@@ -18,7 +19,9 @@ public class UserRolesResponseDTO extends RepresentationModel<UserResponseDTO> i
     private UUID id;
     private UUID userId;
     private UUID roleId;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant createdAt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant updatedAt;
 
     public UUID getId() {

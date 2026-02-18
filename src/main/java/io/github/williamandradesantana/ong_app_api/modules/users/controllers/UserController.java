@@ -5,6 +5,7 @@ import io.github.williamandradesantana.ong_app_api.modules.users.data.dto.UserRe
 import io.github.williamandradesantana.ong_app_api.modules.users.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,14 @@ public class UserController {
     @Autowired
     private UserServices services;
 
-    @GetMapping("/")
+    @GetMapping(
+            value = "/",
+            produces = {
+                MediaType.APPLICATION_JSON_VALUE,
+                MediaType.APPLICATION_XML_VALUE,
+                MediaType.APPLICATION_YAML_VALUE
+            }
+    )
     public Page<UserResponseDTO> getAllUsers(
             @RequestParam(defaultValue = "0", required = false) int page,
             @RequestParam(defaultValue = "5", required = false) int size
@@ -25,17 +33,48 @@ public class UserController {
         return services.findAll(page, size);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(
+            value = "/{id}",
+            produces = {
+                MediaType.APPLICATION_JSON_VALUE,
+                MediaType.APPLICATION_XML_VALUE,
+                MediaType.APPLICATION_YAML_VALUE
+            }
+    )
     public UserResponseDTO getUserById(@PathVariable UUID id) {
          return services.findById(id);
     }
 
-    @PostMapping("/")
+    @PostMapping(
+            value = "/",
+            consumes = {
+                MediaType.APPLICATION_JSON_VALUE,
+                MediaType.APPLICATION_XML_VALUE,
+                MediaType.APPLICATION_YAML_VALUE
+            },
+            produces = {
+                MediaType.APPLICATION_JSON_VALUE,
+                MediaType.APPLICATION_XML_VALUE,
+                MediaType.APPLICATION_YAML_VALUE
+            }
+    )
     public UserResponseDTO createUser(@RequestBody UserRequestDTO requestDTO) {
         return services.createUser(requestDTO);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(
+            value = "/{id}",
+            consumes = {
+                MediaType.APPLICATION_JSON_VALUE,
+                MediaType.APPLICATION_XML_VALUE,
+                MediaType.APPLICATION_YAML_VALUE
+            },
+            produces = {
+                MediaType.APPLICATION_JSON_VALUE,
+                MediaType.APPLICATION_XML_VALUE,
+                MediaType.APPLICATION_YAML_VALUE
+            }
+    )
     public UserResponseDTO updateUser(@PathVariable("id") UUID id, @RequestBody UserRequestDTO requestDTO) {
         return services.updateUser(id, requestDTO);
     }

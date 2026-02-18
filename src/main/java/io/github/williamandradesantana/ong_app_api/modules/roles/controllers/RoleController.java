@@ -4,6 +4,7 @@ import io.github.williamandradesantana.ong_app_api.modules.roles.data.dto.RoleRe
 import io.github.williamandradesantana.ong_app_api.modules.roles.data.dto.RoleResponseDTO;
 import io.github.williamandradesantana.ong_app_api.modules.roles.services.RoleServices;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,7 +17,14 @@ public class RoleController {
         this.services = services;
     }
 
-    @GetMapping("/")
+    @GetMapping(
+            value = "/",
+            produces = {
+                MediaType.APPLICATION_JSON_VALUE,
+                MediaType.APPLICATION_XML_VALUE,
+                MediaType.APPLICATION_YAML_VALUE
+            }
+    )
     public Page<RoleResponseDTO> findAll(
             @RequestParam(defaultValue = "0", required = false) int page,
             @RequestParam(defaultValue = "5", required = false) int size
@@ -24,7 +32,18 @@ public class RoleController {
         return services.findAll(page, size);
     }
 
-    @PostMapping("/")
+    @PostMapping(value = "/",
+            consumes = {
+                MediaType.APPLICATION_JSON_VALUE,
+                MediaType.APPLICATION_XML_VALUE,
+                MediaType.APPLICATION_YAML_VALUE
+            },
+            produces = {
+                MediaType.APPLICATION_JSON_VALUE,
+                MediaType.APPLICATION_XML_VALUE,
+                MediaType.APPLICATION_YAML_VALUE
+            }
+    )
     public RoleResponseDTO createRole(@RequestBody RoleRequestDTO requestDTO) {
         return services.createRole(requestDTO);
     }

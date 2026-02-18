@@ -21,6 +21,9 @@ public interface UserRolesMapper {
     UserRolesResponseDTO toResponseDTO(UserRolesEntity entity);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "enabled", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     @Mapping(source = "userId", target = "user")
     @Mapping(source = "roleId", target = "role")
     UserRolesEntity toEntity(UserRolesRequestDTO dto);

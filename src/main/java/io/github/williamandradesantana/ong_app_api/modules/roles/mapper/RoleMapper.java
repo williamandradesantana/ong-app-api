@@ -8,6 +8,11 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface RoleMapper {
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "enabled", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     RoleEntity toEntity(RoleRequestDTO requestDTO);
     RoleRequestDTO toRequestDTO(RoleEntity entity);
 
