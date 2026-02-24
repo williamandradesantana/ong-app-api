@@ -25,7 +25,7 @@ public class ProjectEntity implements Serializable {
     @Column(name = "id", nullable = false)
     private UUID id;
 
-    @Column(name = "name", unique = true, nullable = false, length = 150)
+    @Column(name = "name", nullable = false, length = 150)
     private String name;
 
     @Column(name = "description", nullable = false, length = 500)

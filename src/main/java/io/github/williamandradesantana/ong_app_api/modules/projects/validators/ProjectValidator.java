@@ -30,8 +30,8 @@ public class ProjectValidator {
             throw new BusinessException("End date must be after start date");
         }
 
-        if (existsByName(requestDTO.getName()))
-            throw new BusinessException("Already exists a project with this name");
+        if (existsProjectWithSameNameAndPeriod(requestDTO))
+            throw new BusinessException("A project with the same name and period already exists");
     }
 
     private boolean isStartDateInPast(ProjectRequestDTO requestDTO) {
@@ -50,7 +50,15 @@ public class ProjectValidator {
                 requestDTO.getEndDate().isBefore(requestDTO.getStartDate());
     }
 
-    private boolean existsByName(String name) {
-        return repository.existsByName(name);
+    private boolean existsProjectWithSameNameAndPeriod(ProjectRequestDTO requestDTO) {
+
+        if (requestDTO.getName() == null || requestDTO.getStartDate() == null || requestDTO.getEndDate() == null)
+            return false;
+
+        return repository.existsByNameAndStartDateAndEndDate(
+                requestDTO.getName(),
+                requestDTO.getStartDate(),
+                requestDTO.getEndDate()
+        );
     }
 }

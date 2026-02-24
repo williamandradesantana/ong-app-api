@@ -8,11 +8,12 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.Instant;
 import java.util.UUID;
 
 public interface ProjectRepository extends JpaRepository<ProjectEntity, UUID> {
     Page<ProjectEntity> findByEnabledTrue(Pageable pageable);
-    boolean existsByName(String name);
+    boolean existsByNameAndStartDateAndEndDate(String name, Instant startDate, Instant endDate);
 
     @Modifying(clearAutomatically = true)
     @Query("UPDATE ProjectEntity p SET p.enabled = false WHERE p.id = :id")

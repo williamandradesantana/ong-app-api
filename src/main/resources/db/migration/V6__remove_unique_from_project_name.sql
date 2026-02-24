@@ -1,0 +1,1 @@
+alter table tb_projects drop index name;
