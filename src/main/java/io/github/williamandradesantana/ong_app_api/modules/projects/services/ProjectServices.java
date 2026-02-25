@@ -63,10 +63,12 @@ public class ProjectServices {
 
         validator.validateProject(requestDTO);
 
-        var entity = mapper.toEntity(requestDTO);
+        var entity = repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Project not found with id: " + id));
 
-        entity.setName(entity.getName());
-        entity.setDescription(entity.getDescription());
+        entity.setName(requestDTO.getName());
+        entity.setDescription(requestDTO.getDescription());
         entity.setProjectStatus(requestDTO.getProjectStatus());
         entity.setGoalAmount(requestDTO.getGoalAmount());
         entity.setCurrentAmount(requestDTO.getCurrentAmount());
@@ -74,7 +76,7 @@ public class ProjectServices {
         entity.setEndDate(requestDTO.getEndDate());
 
         var savedProject = repository.save(entity);
-        return toResponseDTOWithLinks(entity);
+        return toResponseDTOWithLinks(savedProject);
     }
 
     @Transactional
@@ -107,6 +109,7 @@ public class ProjectServices {
     private void addHateoasLinks(ProjectResponseDTO dto) {
         dto.add(linkTo(methodOn(ProjectController.class).findAll(1, 12, "asc")).withRel("findAll").withType("GET"));
         dto.add(linkTo(methodOn(ProjectController.class).findById(dto.getId())).withSelfRel().withType("GET"));
+        dto.add(linkTo(methodOn(ProjectController.class).updateProject(dto.getId(), null)).withRel("updateProject").withType("PUT"));
         dto.add(linkTo(methodOn(ProjectController.class).disableProject(dto.getId())).withRel("disableProject").withType("PATCH"));
         dto.add(linkTo(methodOn(ProjectController.class).disableProject(dto.getId())).withRel("deleteProject").withType("DELETE"));
     }
