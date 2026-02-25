@@ -111,6 +111,7 @@ public class EventServices {
     private void addHateoasLinks(EventResponseDTO dto) {
         dto.add(linkTo(methodOn(EventController.class).findAll(1, 12, "asc")).withRel("findAll").withType("GET"));
         dto.add(linkTo(methodOn(EventController.class).findById(dto.getId())).withSelfRel().withType("GET"));
+        dto.add(linkTo(methodOn(EventController.class).updateEvent(dto.getId(), null)).withRel("updateEvent").withType("PUT"));
         dto.add(linkTo(methodOn(EventController.class).disableEvent(dto.getId())).withRel("disableEvent").withType("PATCH"));
         dto.add(linkTo(methodOn(EventController.class).deleteEvent(dto.getId())).withRel("deleteEvent").withType("DELETE"));
     }
