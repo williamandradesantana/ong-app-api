@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: ong_mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: ong_app_api
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: ong
+      MYSQL_PASSWORD: ong
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.3
+    container_name: ong_keycloak
+    command: start-dev
+    restart: always
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8081:8080"
+
+  app:
+    build: .
+    container_name: ong_app_api
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      DB_USERNAME: ong
+      DB_PASSWORD: ong
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak:8080/realms/ong-app
+    depends_on:
+      mysql:
+        condition: service_healthy
+      keycloak:
+        condition: service_started
+
+volumes:
+  mysql_data:
